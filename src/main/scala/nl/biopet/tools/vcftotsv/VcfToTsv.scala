@@ -10,7 +10,7 @@ import scala.collection.JavaConversions._
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
 
-object VcfToTsv extends ToolCommand {
+object VcfToTsv extends ToolCommand[Args] {
 
   val defaultFields = List("CHROM", "POS", "ID", "REF", "ALT", "QUAL")
 

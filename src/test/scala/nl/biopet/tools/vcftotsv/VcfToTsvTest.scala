@@ -2,12 +2,12 @@ package nl.biopet.tools.vcftotsv
 
 import java.io.File
 
-import nl.biopet.test.BiopetTest
+import nl.biopet.utils.test.tools.ToolTest
 import org.testng.annotations.Test
 
 import scala.util.Random
 
-class VcfToTsvTest extends BiopetTest {
+class VcfToTsvTest extends ToolTest[Args] {
 
   import VcfToTsv._
 
