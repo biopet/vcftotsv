@@ -11,6 +11,8 @@ import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
 
 object VcfToTsv extends ToolCommand[Args] {
+  def emptyArgs: Args = Args()
+  def argsParser = new ArgsParser(toolName)
 
   val defaultFields = List("CHROM", "POS", "ID", "REF", "ALT", "QUAL")
 

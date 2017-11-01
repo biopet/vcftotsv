@@ -8,6 +8,7 @@ import org.testng.annotations.Test
 import scala.util.Random
 
 class VcfToTsvTest extends ToolTest[Args] {
+  def toolCommand: VcfToTsv.type = VcfToTsv
 
   import VcfToTsv._
 
