@@ -10,14 +10,14 @@ import scala.collection.JavaConversions._
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
 
-object VcfToTsv extends ToolCommand {
+object VcfToTsv extends ToolCommand[Args] {
+  def emptyArgs: Args = Args()
+  def argsParser = new ArgsParser(toolName)
 
   val defaultFields = List("CHROM", "POS", "ID", "REF", "ALT", "QUAL")
 
   def main(args: Array[String]): Unit = {
-    val parser = new ArgsParser(toolName)
-    val cmdArgs =
-      parser.parse(args, Args()).getOrElse(throw new IllegalArgumentException)
+    val cmdArgs = cmdArrayToArgs(args)
 
     logger.info("Start")
 
