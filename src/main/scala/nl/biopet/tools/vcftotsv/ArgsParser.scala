@@ -5,11 +5,13 @@ import java.io.File
 import nl.biopet.utils.tool.AbstractOptParser
 
 class ArgsParser(cmdName: String) extends AbstractOptParser[Args](cmdName) {
-  opt[File]('I', "inputFile") required () maxOccurs 1 valueName "<file>" action { (x, c) =>
-    c.copy(inputFile = x)
+  opt[File]('I', "inputFile") required () maxOccurs 1 valueName "<file>" action {
+    (x, c) =>
+      c.copy(inputFile = x)
   } text "Input vcf file"
-  opt[File]('o', "outputFile") maxOccurs 1 valueName "<file>" action { (x, c) =>
-    c.copy(outputFile = x)
+  opt[File]('o', "outputFile") maxOccurs 1 valueName "<file>" action {
+    (x, c) =>
+      c.copy(outputFile = x)
   } text "output file, default to stdout"
   opt[String]('f', "field") unbounded () action { (x, c) =>
     c.copy(fields = x :: c.fields)

@@ -36,12 +36,15 @@ object VcfToTsv extends ToolCommand[Args] {
     val allInfoFields = header.getInfoHeaderLines.map(_.getID).toList
     val allFormatFields = header.getFormatHeaderLines.map(_.getID).toList
 
-    val fields: Set[String] = (if (cmdArgs.disableDefaults) Nil else defaultFields)
+    val fields: Set[String] = (if (cmdArgs.disableDefaults) Nil
+                               else defaultFields)
       .toSet[String] ++
       cmdArgs.fields.toSet[String] ++
-      (if (cmdArgs.allInfo) allInfoFields else cmdArgs.infoFields).map("INFO-" + _) ++ {
+      (if (cmdArgs.allInfo) allInfoFields else cmdArgs.infoFields)
+        .map("INFO-" + _) ++ {
       val buffer: ListBuffer[String] = ListBuffer()
-      for (f <- if (cmdArgs.allFormat) allFormatFields else cmdArgs.sampleFields;
+      for (f <- if (cmdArgs.allFormat) allFormatFields
+           else cmdArgs.sampleFields;
            sample <- samples) {
         buffer += sample + "-" + f
       }
@@ -66,7 +69,7 @@ object VcfToTsv extends ToolCommand[Args] {
         t.mkString(cmdArgs.listSeparator)
       }
       values += "QUAL" -> (if (vcfRecord.getPhredScaledQual == -10) "."
-      else formatter.format(vcfRecord.getPhredScaledQual))
+                           else formatter.format(vcfRecord.getPhredScaledQual))
       values += "INFO" -> vcfRecord.getFilters
       for ((field, content) <- vcfRecord.getAttributes) {
         values += "INFO-" + field -> {
@@ -82,15 +85,18 @@ object VcfToTsv extends ToolCommand[Args] {
       for (sample <- samples) {
         val genotype = vcfRecord.getGenotype(sample)
         values += sample + "-GT" -> {
-          val l = for (g <- genotype.getAlleles) yield vcfRecord.getAlleleIndex(g)
+          val l = for (g <- genotype.getAlleles)
+            yield vcfRecord.getAlleleIndex(g)
           l.map(x => if (x < 0) "." else x).mkString("/")
         }
         if (genotype.hasAD)
-          values += sample + "-AD" -> List(genotype.getAD: _*).mkString(cmdArgs.listSeparator)
+          values += sample + "-AD" -> List(genotype.getAD: _*)
+            .mkString(cmdArgs.listSeparator)
         if (genotype.hasDP) values += sample + "-DP" -> genotype.getDP
         if (genotype.hasGQ) values += sample + "-GQ" -> genotype.getGQ
         if (genotype.hasPL)
-          values += sample + "-PL" -> List(genotype.getPL: _*).mkString(cmdArgs.listSeparator)
+          values += sample + "-PL" -> List(genotype.getPL: _*)
+            .mkString(cmdArgs.listSeparator)
         for ((field, content) <- genotype.getExtendedAttributes) {
           values += sample + "-" + field -> content
         }
