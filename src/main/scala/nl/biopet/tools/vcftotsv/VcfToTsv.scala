@@ -55,7 +55,7 @@ object VcfToTsv extends ToolCommand[Args] {
 
     val writer =
       if (cmdArgs.outputFile != null) new PrintStream(cmdArgs.outputFile)
-      else sys.process.stdout
+      else Console.out
 
     writer.println(sortedFields.mkString("#", cmdArgs.separator, ""))
     for (vcfRecord <- reader) {
