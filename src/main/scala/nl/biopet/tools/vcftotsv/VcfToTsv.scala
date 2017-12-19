@@ -157,4 +157,24 @@ object VcfToTsv extends ToolCommand[Args] {
       }
     })
   }
+
+  def descriptionText: String =
+    """
+      |This tool converts a vcf file to a Tab Separated Values (TSV) file. For every key in the INFO column of the VCF file,
+      |a separate column will be created with the corresponding values. The user can select the keys that will be parsed into
+      |the output TSV file. This can be useful in the case a program only accepts a TSV file for downstream analysis.
+      |
+    """.stripMargin
+
+  def manualText: String =
+    """
+      |The output of this tool is a TSV file produced from the input vcf file. Depending on which options are enabled their
+      | could be some fields discarded. Fieldseparator and list separator values can be selected.
+    """.stripMargin
+
+  def exampleText: String =
+    """
+      |To run a simple conversion that will include all info fields in the resulting tsv run:
+    """.stripMargin +
+    example("--inputFile", "myVCF.vcf", "--outputFile", "my_tabDelimited_VCF.tsv", "--all_info")
 }
