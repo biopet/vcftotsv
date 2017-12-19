@@ -1,7 +1,6 @@
 organization := "com.github.biopet"
 organizationName := "Sequencing Analysis Support Core - Leiden University Medical Center"
 
-//TODO: Start year should reflect the tools original start year on github.com/biopet/biopet in the tools section
 startYear := Some(2014)
 
 name := "vcftotsv"
