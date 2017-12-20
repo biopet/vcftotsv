@@ -1,3 +1,24 @@
+/*
+ * Copyright (c) 2014 Sequencing Analysis Support Core - Leiden University Medical Center
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of
+ * this software and associated documentation files (the "Software"), to deal in
+ * the Software without restriction, including without limitation the rights to
+ * use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+ * the Software, and to permit persons to whom the Software is furnished to do so,
+ * subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+ * FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+ * COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+ * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+ * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */
+
 package nl.biopet.tools.vcftotsv
 
 import java.io.PrintStream
@@ -12,7 +33,7 @@ import scala.collection.mutable.ListBuffer
 
 object VcfToTsv extends ToolCommand[Args] {
   def emptyArgs: Args = Args()
-  def argsParser = new ArgsParser(toolName)
+  def argsParser = new ArgsParser(this)
 
   val defaultFields = List("CHROM", "POS", "ID", "REF", "ALT", "QUAL")
 
@@ -157,4 +178,28 @@ object VcfToTsv extends ToolCommand[Args] {
       }
     })
   }
+
+  def descriptionText: String =
+    """
+      |This tool converts a vcf file to a Tab Separated Values (TSV) file. For every key in the INFO column of the VCF file,
+      |a separate column will be created with the corresponding values. The user can select the keys that will be parsed into
+      |the output TSV file. This can be useful in the case a program only accepts a TSV file for downstream analysis.
+      |
+    """.stripMargin
+
+  def manualText: String =
+    """
+      |The output of this tool is a TSV file produced from the input vcf file. Depending on which options are enabled their
+      | could be some fields discarded. Fieldseparator and list separator values can be selected.
+    """.stripMargin
+
+  def exampleText: String =
+    """
+      |To run a simple conversion that will include all info fields in the resulting tsv run:
+    """.stripMargin +
+      example("--inputFile",
+              "myVCF.vcf",
+              "--outputFile",
+              "my_tabDelimited_VCF.tsv",
+              "--all_info")
 }
