@@ -41,16 +41,16 @@ class ArgsParser(toolCommand: ToolCommand[Args])
   opt[String]('i', "info_field") unbounded () action { (x, c) =>
     c.copy(infoFields = x :: c.infoFields)
   } text "Info field to use" valueName "Info field name"
-  opt[Unit]("all_info") unbounded () action { (_, c) =>
+  opt[Unit]("all_info") action { (_, c) =>
     c.copy(allInfo = true)
   } text "Use all info fields in the vcf header"
-  opt[Unit]("all_format") unbounded () action { (_, c) =>
+  opt[Unit]("all_format") action { (_, c) =>
     c.copy(allFormat = true)
   } text "Use all genotype fields in the vcf header"
   opt[String]('s', "sample_field") unbounded () action { (x, c) =>
     c.copy(sampleFields = x :: c.sampleFields)
   } text "Genotype fields to use in the tsv file"
-  opt[Unit]('d', "disable_defaults") unbounded () action { (_, c) =>
+  opt[Unit]('d', "disable_defaults") action { (_, c) =>
     c.copy(disableDefaults = true)
   } text "Don't output the default columns from the vcf file"
   opt[String]("separator") maxOccurs 1 action { (x, c) =>
