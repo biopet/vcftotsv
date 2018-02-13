@@ -95,10 +95,10 @@ object VcfToTsv extends ToolCommand[Args] {
       for ((field, content) <- vcfRecord.getAttributes) {
         values += "INFO-" + field -> {
           content match {
-            case a: List[_] => a.mkString(cmdArgs.listSeparator)
-            case a: Array[_] => a.mkString(cmdArgs.listSeparator)
+            case a: List[_]                => a.mkString(cmdArgs.listSeparator)
+            case a: Array[_]               => a.mkString(cmdArgs.listSeparator)
             case a: java.util.ArrayList[_] => a.mkString(cmdArgs.listSeparator)
-            case _ => content
+            case _                         => content
           }
         }
       }
@@ -151,9 +151,9 @@ object VcfToTsv extends ToolCommand[Args] {
     */
   def sortFields(fields: Set[String], samples: List[String]): List[String] = {
     def fieldType(x: String) = x match {
-      case _ if x.startsWith("INFO-") => 'i'
+      case _ if x.startsWith("INFO-")                      => 'i'
       case _ if samples.exists(y => x.startsWith(y + "-")) => 'f'
-      case _ => 'g'
+      case _                                               => 'g'
     }
 
     fields.toList.sortWith((a, b) => {
@@ -166,15 +166,15 @@ object VcfToTsv extends ToolCommand[Args] {
           val sampleA = a.split("-").head
           val sampleB = b.split("-").head
           sampleA.compareTo(sampleB) match {
-            case 0 => !(a.compareTo(b) > 0)
+            case 0          => !(a.compareTo(b) > 0)
             case i if i > 0 => false
-            case _ => true
+            case _          => true
           }
-        case ('g', _) => true
-        case (_, 'g') => false
+        case ('g', _)             => true
+        case (_, 'g')             => false
         case (a2, b2) if a2 == b2 => !(a2.compareTo(b2) > 0)
-        case ('i', _) => true
-        case _ => false
+        case ('i', _)             => true
+        case _                    => false
       }
     })
   }

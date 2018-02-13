@@ -31,9 +31,8 @@ class ArgsParser(toolCommand: ToolCommand[Args])
     (x, c) =>
       c.copy(inputFile = x)
   } text "Input vcf file"
-  opt[File]('o', "outputFile") maxOccurs 1 valueName "<file>" action {
-    (x, c) =>
-      c.copy(outputFile = x)
+  opt[File]('o', "outputFile") maxOccurs 1 valueName "<file>" action { (x, c) =>
+    c.copy(outputFile = x)
   } text "output file, default to stdout"
   opt[String]('f', "field") unbounded () action { (x, c) =>
     c.copy(fields = x :: c.fields)
