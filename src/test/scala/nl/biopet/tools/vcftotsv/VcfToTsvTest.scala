@@ -1,3 +1,24 @@
+/*
+ * Copyright (c) 2014 Biopet
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of
+ * this software and associated documentation files (the "Software"), to deal in
+ * the Software without restriction, including without limitation the rights to
+ * use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+ * the Software, and to permit persons to whom the Software is furnished to do so,
+ * subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+ * FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+ * COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+ * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+ * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */
+
 package nl.biopet.tools.vcftotsv
 
 import java.io.File
@@ -45,14 +66,23 @@ class VcfToTsvTest extends ToolTest[Args] {
     tmp.deleteOnExit()
     val tmpPath = tmp.getAbsolutePath
     val arguments =
-      Array("-I", vepped, "-o", tmpPath, "--all_info", "--separator", ",", "--list_separator", "|")
+      Array("-I",
+            vepped,
+            "-o",
+            tmpPath,
+            "--all_info",
+            "--separator",
+            ",",
+            "--list_separator",
+            "|")
     main(arguments)
   }
 
   @Test(expectedExceptions = Array(classOf[IllegalArgumentException]))
   def testIdenticalSeparators(): Unit = {
     val tmpPath = "/tmp/VcfToTsv_" + rand.nextString(10) + ".tsv"
-    val arguments = Array("-I", vepped, "-o", tmpPath, "--all_info", "--separator", ",")
+    val arguments =
+      Array("-I", vepped, "-o", tmpPath, "--all_info", "--separator", ",")
     main(arguments)
   }
 
@@ -65,22 +95,22 @@ class VcfToTsvTest extends ToolTest[Args] {
 
   @Test def testSortFields(): Unit = {
     val unsortedFields = Set("Child01-GT",
-      "Mother02-GT",
-      "Father03-GT",
-      "INFO-Something",
-      "INFO-ScoreSomething",
-      "INFO-AlleleScoreSomething",
-      "WeirdField")
+                             "Mother02-GT",
+                             "Father03-GT",
+                             "INFO-Something",
+                             "INFO-ScoreSomething",
+                             "INFO-AlleleScoreSomething",
+                             "WeirdField")
     val samples = List("Child01", "Father03", "Mother02")
 
     val sorted = sortFields(unsortedFields, samples)
     sorted should be(
       List("WeirdField",
-        "INFO-AlleleScoreSomething",
-        "INFO-ScoreSomething",
-        "INFO-Something",
-        "Child01-GT",
-        "Father03-GT",
-        "Mother02-GT"))
+           "INFO-AlleleScoreSomething",
+           "INFO-ScoreSomething",
+           "INFO-Something",
+           "Child01-GT",
+           "Father03-GT",
+           "Mother02-GT"))
   }
 }
